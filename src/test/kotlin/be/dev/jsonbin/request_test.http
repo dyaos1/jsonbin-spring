@@ -1,0 +1,24 @@
+### post
+POST http://localhost:8080/api/v1/json/
+Content-Type: application/json
+
+{
+  "name": "hello"
+}
+
+
+### get
+GET http://localhost:8080/api/v1/json/2c7aef48-fdc8-4c4c-a3a9-453f0cf70cab
+
+
+### put
+PUT http://localhost:8080/api/v1/json/2c7aef48-fdc8-4c4c-a3a9-453f0cf70cab
+Content-Type: application/json
+
+{
+  "name": "hi"
+}
+
+
+### delete
+DELETE http://localhost:8080/api/v1/json/2c7aef48-fdc8-4c4c-a3a9-453f0cf70cab
