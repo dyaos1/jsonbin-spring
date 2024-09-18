@@ -1,36 +1,28 @@
 package be.dev.jsonbin.dto
 
 import be.dev.jsonbin.Items
+import be.dev.jsonbin.util.ObjectUtil
+import com.fasterxml.jackson.databind.ObjectMapper
 import java.time.LocalDateTime
 import java.util.*
 
 data class GetResponseDto(
-    var id: Long? = null,
+    val id: Long? = null,
     var uuid: UUID = UUID.randomUUID(),
-    val data: MutableMap<String, Any> = mutableMapOf(),
-    var created_at: LocalDateTime,
-    var updated_at: LocalDateTime,
-    var version: Int = 0,
+    val data: Map<String, Any>? = null,
+    val createdAt: LocalDateTime,
+    val updatedAt: LocalDateTime,
+    val version: Int = 0,
 )
 
 fun payLoadMapper(payload: String?, item: Items): GetResponseDto {
     val getResponse = GetResponseDto(
         id = item.id,
         uuid = item.uuid,
-        created_at = item.created_at,
-        updated_at = item.updated_at,
+        data = payload?.let {ObjectUtil.jsonToMap(payload)},
+        createdAt = item.createdAt,
+        updatedAt = item.updatedAt,
         version = item.version,
     )
-    if (payload == null) {
-       return getResponse
-    }
-
-    val rawPayload = payload.replace("{", "").replace("}", "").replace("\"", "")
-    val payloadList = rawPayload.split(",")
-
-    for (payloadString in payloadList) {
-        val payloadStringPair = payloadString.split(":")
-        getResponse.data[payloadStringPair[0]] = payloadStringPair[1]
-    }
     return getResponse
 }

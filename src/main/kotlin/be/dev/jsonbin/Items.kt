@@ -15,7 +15,7 @@ data class Items(
     var id: Long? = null,
     var uuid: UUID = UUID.randomUUID(),
     var payload: String? = null,
-    var created_at: LocalDateTime = LocalDateTime.now(),
-    var updated_at: LocalDateTime = LocalDateTime.now(),
+    var createdAt: LocalDateTime = LocalDateTime.now(),
+    var updatedAt: LocalDateTime = LocalDateTime.now(),
     var version: Int = 0,
 )

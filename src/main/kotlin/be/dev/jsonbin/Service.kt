@@ -33,7 +33,7 @@ class Service(
     fun updateJson(uuid: UUID, putRequestDto: PutRequestDto): Items {
         val found = repository.findByUuid(uuid).orElseThrow {IllegalArgumentException("No json exists for id $uuid")}
         found.payload = putRequestDto.payload
-        found.updated_at = LocalDateTime.now()
+        found.updatedAt = LocalDateTime.now()
         return repository.save(found)
     }
 
