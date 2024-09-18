@@ -1,16 +1,25 @@
 spring:
   application:
     name: jsonbin
+#  datasource:
+#    url: jdbc:h2:mem:testdb
+#    username: sa
+#    driver-class-name: org.h2.Driver
   datasource:
-    url: jdbc:h2:mem:testdb
-    username: sa
-    driver-class-name: org.h2.Driver
+    url: jdbc:mysql://localhost:3307/json_bin
+    username: root
+    password: 1234
+    driver-class-name: com.mysql.cj.jdbc.Driver
 
   jpa:
     hibernate:
-      ddl-auto: create
+      ddl-auto: update
     show-sql: true
+    database-platform: org.hibernate.dialect.MySQLDialect
+
   h2:
     console:
       path: /h2-console
       enabled: true
+
+

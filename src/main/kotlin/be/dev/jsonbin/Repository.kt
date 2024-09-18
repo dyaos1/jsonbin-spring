@@ -5,5 +5,8 @@ import org.springframework.stereotype.Repository
 import java.util.*
 
 @Repository
-interface Repository : CrudRepository<Entity, UUID> {
+interface Repository : CrudRepository<Items, UUID> {
+    fun findByUuid(uuid: UUID): Optional<Items>
+
+    fun deleteByUuid(uuid: UUID)
 }

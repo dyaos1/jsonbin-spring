@@ -1,5 +1,6 @@
 package be.dev.jsonbin
 
+import be.dev.jsonbin.dto.GetResponseDto
 import be.dev.jsonbin.dto.PostRequestDto
 import be.dev.jsonbin.dto.PostResponseDto
 import be.dev.jsonbin.dto.PutRequestDto
@@ -20,9 +21,9 @@ import java.util.*
 class Controller(
     private val service: Service
 ) {
-    @GetMapping("/{id}")
-    fun getJson(@PathVariable("id") id: String): Entity {
-        return service.getJson(id)
+    @GetMapping("/{uuid}")
+    fun getJson(@PathVariable("uuid") uuid: UUID): GetResponseDto {
+        return service.getJson(uuid)
     }
 
     @PostMapping(path = ["/"])

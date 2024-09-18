@@ -1,37 +1,43 @@
 package be.dev.jsonbin
 
+import be.dev.jsonbin.dto.GetResponseDto
 import be.dev.jsonbin.dto.PostRequestDto
 import be.dev.jsonbin.dto.PostResponseDto
 import be.dev.jsonbin.dto.PutRequestDto
+import be.dev.jsonbin.dto.payLoadMapper
 import org.springframework.stereotype.Service
+import java.time.LocalDateTime
 import java.util.UUID
 
 @Service
 class Service(
     private val repository: Repository
 ) {
-    fun getJson(id: String): Entity {
-        return repository.findById(UUID.fromString(id))
-            .orElseThrow{IllegalArgumentException("No json exists for id $id")}
+    fun getJson(uuid: UUID): GetResponseDto {
+        val item = repository.findByUuid(uuid)
+            .orElseThrow{IllegalArgumentException("No json exists for id $uuid")}
+
+        return payLoadMapper(item.payload, item)
     }
 
     fun postJson(postRequestDto: PostRequestDto): PostResponseDto {
-        val id = repository.save(Entity(
-            name = postRequestDto.name,
-        )).id ?: throw IllegalStateException("id was not created properly")
+        val uuid = repository.save(Items(
+            payload = postRequestDto.payload,
+        )).uuid
 
         return PostResponseDto(
-            id = id
+            uuid = uuid
         )
     }
 
-    fun updateJson(id: UUID, putRequestDto: PutRequestDto): Entity {
-        val found = repository.findById(id).orElseThrow {IllegalArgumentException("No json exists for id $id")}
-        found.name = putRequestDto.name
+    fun updateJson(uuid: UUID, putRequestDto: PutRequestDto): Items {
+        val found = repository.findByUuid(uuid).orElseThrow {IllegalArgumentException("No json exists for id $uuid")}
+        found.payload = putRequestDto.payload
+        found.updated_at = LocalDateTime.now()
         return repository.save(found)
     }
 
-    fun deleteJson(id: UUID) {
-        return repository.deleteById(id)
+    fun deleteJson(uuid: UUID) {
+        return repository.deleteByUuid(uuid)
     }
 }
