@@ -4,6 +4,7 @@ import be.dev.jsonbin.dto.GetResponseDto
 import be.dev.jsonbin.dto.PostRequestDto
 import be.dev.jsonbin.dto.PostResponseDto
 import be.dev.jsonbin.dto.PutRequestDto
+import jakarta.websocket.server.PathParam
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.DeleteMapping
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.PutMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
+import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.RestController
 import java.util.*
 
@@ -22,8 +24,11 @@ class Controller(
     private val service: Service
 ) {
     @GetMapping("/{uuid}")
-    fun getJson(@PathVariable("uuid") uuid: UUID): GetResponseDto {
-        return service.getJson(uuid)
+    fun getJson(
+        @PathVariable("uuid") uuid: UUID,
+        @RequestParam("type") type: String?
+    ): GetResponseDto {
+        return service.getJson(uuid, type)
     }
 
     @PostMapping(path = ["/"])

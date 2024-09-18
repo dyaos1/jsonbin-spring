@@ -6,23 +6,19 @@ import com.fasterxml.jackson.databind.ObjectMapper
 import java.time.LocalDateTime
 import java.util.*
 
-data class GetResponseDto(
-    val id: Long? = null,
-    var uuid: UUID = UUID.randomUUID(),
-    val data: Map<String, Any>? = null,
-    val createdAt: LocalDateTime,
-    val updatedAt: LocalDateTime,
-    val version: Int = 0,
-)
+sealed class GetResponseDto {
+    data class Detail(
+        val id: Long? = null,
+        var uuid: UUID = UUID.randomUUID(),
+        val payload: Map<String, Any>? = null,
+        val createdAt: LocalDateTime,
+        val updatedAt: LocalDateTime,
+        val version: Int = 0,
+    ) : GetResponseDto()
 
-fun payLoadMapper(payload: String?, item: Items): GetResponseDto {
-    val getResponse = GetResponseDto(
-        id = item.id,
-        uuid = item.uuid,
-        data = payload?.let {ObjectUtil.jsonToMap(payload)},
-        createdAt = item.createdAt,
-        updatedAt = item.updatedAt,
-        version = item.version,
-    )
-    return getResponse
+    data class Simple(
+        val payload: Map<String, Any>? = null,
+    ) : GetResponseDto()
 }
+
+
