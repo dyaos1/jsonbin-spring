@@ -6,7 +6,7 @@ import java.util.*
 
 @Repository
 interface Repository : CrudRepository<Items, UUID> {
-    fun findByUuid(uuid: UUID): Optional<Items>
+    fun findByUuid(uuid: UUID): Items?
 
     fun deleteByUuid(uuid: UUID)
 }

@@ -13,23 +13,14 @@ import java.util.UUID
 class Service(
     private val repository: Repository
 ) {
-    fun getJson(uuid: UUID, type: String?): GetResponseDto {
+    fun getJson(uuid: UUID, type: String): GetResponseDto {
         val item = repository.findByUuid(uuid)
-            .orElseThrow{IllegalArgumentException("No json exists for id $uuid")}
+        checkNotNull(item) { "No json exists for id $uuid" }
 
-        if (type == "DETAIL" || type == null) {
-            return GetResponseDto.Detail(
-                id = item.id,
-                uuid = item.uuid,
-                payload = item.payload.let { ObjectUtil.jsonToMap(item.payload!!) },
-                createdAt = item.createdAt,
-                updatedAt = item.updatedAt,
-                version = item.version,
-            )
+        return if (type == "DETAIL") {
+            Items.getDetail(item)
         } else if (type == "SIMPLE") {
-            return GetResponseDto.Simple(
-                payload = item.payload.let { ObjectUtil.jsonToMap(item.payload!!) },
-            )
+            Items.getSimple(item)
         } else {
             throw IllegalArgumentException("Unknown type $type")
         }
@@ -47,10 +38,17 @@ class Service(
     }
 
     fun updateJson(uuid: UUID, putRequestDto: PutRequestDto): Items {
-        val found = repository.findByUuid(uuid).orElseThrow {IllegalArgumentException("No json exists for id $uuid")}
-        found.payload = putRequestDto.payload
-        found.updatedAt = LocalDateTime.now()
-        return repository.save(found)
+        val found = repository.findByUuid(uuid) ?: throw IllegalArgumentException("No json exists for id $uuid")
+
+        val updated = found.copy(
+            id = found.id,
+            uuid = found.uuid,
+            payload = putRequestDto.payload,
+            createdAt = found.createdAt,
+            updatedAt = LocalDateTime.now(),
+            version = found.version,
+        )
+        return repository.save(updated)
     }
 
     fun deleteJson(uuid: UUID) {

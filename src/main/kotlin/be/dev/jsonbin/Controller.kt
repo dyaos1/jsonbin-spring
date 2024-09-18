@@ -28,7 +28,7 @@ class Controller(
         @PathVariable("uuid") uuid: UUID,
         @RequestParam("type") type: String?
     ): GetResponseDto {
-        return service.getJson(uuid, type)
+        return service.getJson(uuid, type ?: "DETAIL")
     }
 
     @PostMapping(path = ["/"])
