@@ -1,4 +1,4 @@
-version: '3.8'
+version: '0.1'
 services:
   zookeeper:
     image: confluentinc/cp-zookeeper:7.5.0
@@ -7,6 +7,8 @@ services:
       ZOOKEEPER_TICK_TIME: 2000
     ports:
       - "2181:2181"
+    networks:
+      - jsonbin-network
 
   kafka:
     image: confluentinc/cp-kafka:7.5.0
@@ -15,12 +17,48 @@ services:
     environment:
       KAFKA_BROKER_ID: 1
       KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
-      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://localhost:9092
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:9092
       KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
     ports:
       - "9092:9092"
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
+    networks:
+      - jsonbin-network
+
+  mysql:
+    image: mysql:latest
+    container_name: jsonbin-mysql
+    environment:
+      MYSQL_DATABASE: json_bin
+      MYSQL_ROOT_HOST: '%'
+      MYSQL_ROOT_PASSWORD: 1234
+    ports:
+      - "3307:3306"
+    command: ["--character-set-server=utf8mb4","--collation-server=utf8mb4_unicode_ci"]
+    volumes:
+      - mysql_data:/var/lib/mysql
+    networks:
+      - jsonbin-network
+
+
+  spring-app:
+    build: .
+    container_name: jsonbin-spring
+    ports:
+      - "8080:8080"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/json_bin?useSSL=false&allowPublicKeyRetrieval=true
+      SPRING_DATASOURCE_USERNAME: "root"
+      SPRING_DATASOURCE_PASSWORD: "1234"
+    depends_on:
+      - mysql
+    networks:
+      - jsonbin-network
+
+networks:
+  jsonbin-network:
 
 volumes:
   kafka-data:
+  mysql_data:

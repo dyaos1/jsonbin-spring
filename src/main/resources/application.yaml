@@ -1,10 +1,6 @@
 spring:
   application:
     name: jsonbin
-#  datasource:
-#    url: jdbc:h2:mem:testdb
-#    username: sa
-#    driver-class-name: org.h2.Driver
   datasource:
     url: jdbc:mysql://localhost:3307/json_bin
     username: root
@@ -28,9 +24,17 @@ spring:
       key-serializer: org.apache.kafka.common.serialization.StringSerializer
       value-serializer: org.apache.kafka.common.serialization.StringSerializer
 
-  h2:
-    console:
-      path: /h2-console
-      enabled: true
+  jackson:
+    deserialization:
+      fail-on-unknown-properties: true
+
+  #  datasource:
+  #    url: jdbc:h2:mem:testdb
+  #    username: sa
+  #    driver-class-name: org.h2.Driver
+#  h2:
+#    console:
+#      path: /h2-console
+#      enabled: true
 
 
