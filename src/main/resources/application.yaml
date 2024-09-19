@@ -17,6 +17,17 @@ spring:
     show-sql: true
     database-platform: org.hibernate.dialect.MySQLDialect
 
+  kafka:
+    bootstrap-servers: localhost:9092
+    consumer:
+      group-id: json-bin
+      auto-offset-reset: earliest
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.apache.kafka.common.serialization.StringSerializer
+
   h2:
     console:
       path: /h2-console

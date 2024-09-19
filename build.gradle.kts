@@ -25,6 +25,12 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-web")
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
     implementation("org.jetbrains.kotlin:kotlin-reflect")
+
+    // When using Spring Boot, (and you haven’t used start.spring.io to create your project),
+    // omit the version and Boot will automatically bring in the correct version
+    // that is compatible with your Boot version:
+    implementation("org.springframework.kafka:spring-kafka")
+
     runtimeOnly("com.h2database:h2")
     runtimeOnly("com.mysql:mysql-connector-j")
     testImplementation("org.springframework.boot:spring-boot-starter-test")

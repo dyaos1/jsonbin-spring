@@ -1,10 +1,11 @@
-package be.dev.jsonbin
+package be.dev.jsonbin.controller
 
+import be.dev.jsonbin.Service
 import be.dev.jsonbin.dto.GetResponseDto
 import be.dev.jsonbin.dto.PostRequestDto
 import be.dev.jsonbin.dto.PostResponseDto
 import be.dev.jsonbin.dto.PutRequestDto
-import jakarta.websocket.server.PathParam
+import be.dev.jsonbin.kafka.KafkaProducer
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.DeleteMapping
@@ -20,8 +21,8 @@ import java.util.*
 
 @RestController
 @RequestMapping(path = ["/api/v1/json"])
-class Controller(
-    private val service: Service
+class JsonBinController(
+    private val service: Service,
 ) {
     @GetMapping("/{uuid}")
     fun getJson(
@@ -58,4 +59,5 @@ class Controller(
             return ResponseEntity(HttpStatus.BAD_REQUEST)
         }
     }
+
 }
