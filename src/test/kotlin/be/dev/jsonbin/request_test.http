@@ -17,7 +17,7 @@ Content-Type: application/json
 
 
 ### get
-GET http://localhost:8080/api/v1/json/a9f605a5-f335-48df-9e03-7c03436c8ff4?type=SIMPLE
+GET http://localhost:8080/api/v1/json/de712609-f8fc-4406-bfc2-d036a2aa12fe?type=DETAIL
 
 
 ### put
