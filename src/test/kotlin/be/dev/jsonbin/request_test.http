@@ -17,7 +17,7 @@ Content-Type: application/json
 
 
 ### get
-GET http://localhost:8080/api/v1/json/983e9a4e-bb74-47b0-9d90-35d466c8d47b?type=SIMPLE
+GET http://localhost:8080/api/v1/json/a9f605a5-f335-48df-9e03-7c03436c8ff4?type=SIMPLE
 
 
 ### put
@@ -35,4 +35,3 @@ DELETE http://localhost:8080/api/v1/json/dbdbde81-920b-4fed-9b9d-6ceada9b7772
 
 ### get
 GET http://localhost:8080/kafka/test/hi
-

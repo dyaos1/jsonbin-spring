@@ -41,6 +41,14 @@ services:
     networks:
       - jsonbin-network
 
+  redis:
+    image: redis:latest
+    container_name: jsonbin-redis
+    ports:
+      - "6379:6379"
+    networks:
+      - jsonbin-network
+    command: redis-server
 
   spring-app:
     build: .
@@ -51,8 +59,11 @@ services:
       SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/json_bin?useSSL=false&allowPublicKeyRetrieval=true
       SPRING_DATASOURCE_USERNAME: "root"
       SPRING_DATASOURCE_PASSWORD: "1234"
+      SPRING_KAFKA_BOOTSTRAP-SERVERS: kafka:9092
+      SPRING_DATA_REDIS_HOST: redis
     depends_on:
       - mysql
+      - redis
     networks:
       - jsonbin-network
 

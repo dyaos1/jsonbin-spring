@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 
 @RestController
-@RequestMapping("kafka")
+@RequestMapping(path=["kafka"])
 class KafkaController(
     private val kafkaProducer: KafkaProducer,
 ) {

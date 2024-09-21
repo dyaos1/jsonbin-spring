@@ -45,3 +45,13 @@ image로 build한 컨테이너 끼리는 3307이 아니라 내부 포트인 3306
 결국 ```docker builder prune``` 으로 cache를 날려버리고서야 정상 작동 하게 되었다.
 
 
+4. redis 붙이기
+docker redis는 redis-server 커맨드를 반드시 실행시켜줘야 한다.
+```
+# docker
+docker --name some-redis -p 6379:6379 redis redis-server
+
+# docker compose
+command redis-server
+```
+

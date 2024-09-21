@@ -31,6 +31,10 @@ dependencies {
     // that is compatible with your Boot version:
     implementation("org.springframework.kafka:spring-kafka")
 
+    // redis
+    implementation("org.springframework.boot:spring-boot-starter-data-redis")
+    compileOnly("io.lettuce:lettuce-core:6.3.2.RELEASE")
+
     runtimeOnly("com.h2database:h2")
     runtimeOnly("com.mysql:mysql-connector-j")
     testImplementation("org.springframework.boot:spring-boot-starter-test")
