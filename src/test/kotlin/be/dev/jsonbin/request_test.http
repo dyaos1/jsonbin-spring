@@ -17,20 +17,20 @@ Content-Type: application/json
 
 
 ### get
-GET http://localhost:8080/api/v1/json/de712609-f8fc-4406-bfc2-d036a2aa12fe?type=DETAIL
+GET http://localhost:8080/api/v1/json/a52ace68-25a8-4b90-97e8-171687e81f53?type=DETAILs
 
 
 ### put
-PUT http://localhost:8080/api/v1/json/2c7aef48-fdc8-4c4c-a3a9-453f0cf70cab
+PUT http://localhost:8080/api/v1/json/a52ace68-25a8-4b90-97e8-171687e81f53
 Content-Type: application/json
 
 {
-  "name": "hi"
+  "payload": "hi"
 }
 
 
 ### delete
-DELETE http://localhost:8080/api/v1/json/dbdbde81-920b-4fed-9b9d-6ceada9b7772
+DELETE http://localhost:8080/api/v1/json/a52ace68-25a8-4b90-97e8-171687e81f53
 
 
 ### get

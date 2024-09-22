@@ -1,6 +1,6 @@
 package be.dev.jsonbin.controller
 
-import be.dev.jsonbin.kafka.KafkaProducer
+import be.dev.jsonbin.util.kafka.KafkaProducer
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.RequestMapping

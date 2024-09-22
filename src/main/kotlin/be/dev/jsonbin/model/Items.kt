@@ -1,6 +1,7 @@
-package be.dev.jsonbin
+package be.dev.jsonbin.model
 
 import be.dev.jsonbin.dto.GetResponseDto
+import be.dev.jsonbin.dto.PutResponseDto
 import be.dev.jsonbin.util.ObjectUtil
 import jakarta.persistence.Entity
 import jakarta.persistence.GeneratedValue
@@ -38,5 +39,11 @@ data class Items(
                 payload = item.payload.let { ObjectUtil.jsonToMap(item.payload!!) },
             )
         }
+    }
+
+    fun toPutResponseDto(): PutResponseDto {
+        return PutResponseDto(
+            uuid = uuid
+        )
     }
 }

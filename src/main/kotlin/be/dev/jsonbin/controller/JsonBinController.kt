@@ -1,11 +1,11 @@
 package be.dev.jsonbin.controller
 
-import be.dev.jsonbin.Service
+import be.dev.jsonbin.service.Service
 import be.dev.jsonbin.dto.GetResponseDto
 import be.dev.jsonbin.dto.PostRequestDto
 import be.dev.jsonbin.dto.PostResponseDto
 import be.dev.jsonbin.dto.PutRequestDto
-import be.dev.jsonbin.kafka.KafkaProducer
+import be.dev.jsonbin.dto.PutResponseDto
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.DeleteMapping
@@ -29,7 +29,11 @@ class JsonBinController(
         @PathVariable("uuid") uuid: UUID,
         @RequestParam("type") type: String?
     ): GetResponseDto {
-        return service.getJson(uuid, type ?: "DETAIL")
+        return if (type == "DETAIL") {
+            service.getJsonDetail(uuid)
+        } else {
+            service.getJsonSimple(uuid)
+        }
     }
 
     @PostMapping(path = ["/"])
@@ -41,12 +45,11 @@ class JsonBinController(
     fun updateJson(
         @PathVariable("id") id: UUID,
         @RequestBody putRequestDto: PutRequestDto
-    ): ResponseEntity<Void> {
-        try {
-            service.updateJson(id, putRequestDto)
-            return ResponseEntity.noContent().build()
+    ): ResponseEntity<PutResponseDto> {
+        return try {
+            ResponseEntity.ok(service.updateJson(id, putRequestDto))
         } catch(e: Exception) {
-            return ResponseEntity(HttpStatus.BAD_REQUEST)
+            ResponseEntity(HttpStatus.BAD_REQUEST)
         }
     }
 
